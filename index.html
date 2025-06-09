@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Order Rules | BambiBlossom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF9EB5;
+            --primary-dark: #E75480;
+            --text: #333333;
+            --text-bold: #222222;
+            --text-light: #666666;
+            --background: #FFE5EC;
+            --card-bg: #FFFFFF;
+            --border-cute: #FFD1DC;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Fixed Sakura Animation */
+        .sakura {
+            position: fixed;
+            top: -50px;
+            z-index: 0;
+            animation: falling linear forwards;
+            pointer-events: none;
+            font-size: 25px;
+            opacity: 0.9;
+            will-change: transform;
+        }
+
+        @keyframes falling {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Super Cute Card Frame */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            border: 2px solid var(--border-cute);
+            border-top: 6px solid var(--primary);
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, 
+                #FF9EB5, #FFD1DC, #FF9EB5);
+        }
+
+        /* Floral Border Elements */
+        .card::after {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 1px dashed rgba(255, 158, 181, 0.3);
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .corner {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF9EB5'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+        }
+
+        .corner-tl {
+            top: 4px;
+            left: 4px;
+        }
+
+        .corner-tr {
+            top: 4px;
+            right: 4px;
+            transform: rotate(90deg);
+        }
+
+        .corner-bl {
+            bottom: 4px;
+            left: 4px;
+            transform: rotate(270deg);
+        }
+
+        .corner-br {
+            bottom: 4px;
+            right: 4px;
+            transform: rotate(180deg);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-title::after {
+            content: "";
+            position: absolute;
+            bottom: -6px;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent, #FF9EB5, transparent);
+        }
+        
+        .intro-text {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--text-bold);
+            font-weight: 600;
+        }
+        
+        .rule {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .rule-icon {
+            font-size: 1.3rem;
+            margin-right: 12px;
+            color: var(--primary-dark);
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        
+        .rule-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+        
+        .rule-content p {
+            margin: 0;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .contact-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .contact-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            padding: 4px;
+        }
+        
+        .contact-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+        
+        .contact-button img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-button:hover img {
+            transform: scale(1.1);
+        }
+        
+        .webstore-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .webstore-link:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .agreement {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 30px;
+            font-style: italic;
+        }
+        
+        /* Mobile-specific adjustments */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 12px;
+                margin: 15px auto;
+            }
+            
+            .card {
+                padding: 20px 15px;
+                border-radius: 14px;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+            }
+            
+            .page-title {
+                font-size: 1.4rem;
+            }
+            
+            .intro-text {
+                font-size: 0.95rem;
+            }
+            
+            .rule {
+                margin-bottom: 18px;
+            }
+            
+            .rule-icon {
+                font-size: 1.2rem;
+                margin-right: 10px;
+            }
+            
+            .rule-content h3 {
+                font-size: 1rem;
+            }
+            
+            .rule-content p {
+                font-size: 0.9rem;
+            }
+            
+            .contact-buttons {
+                gap: 10px;
+            }
+            
+            .contact-button {
+                width: 42px;
+                height: 42px;
+            }
+            
+            .contact-button img {
+                width: 26px;
+                height: 26px;
+            }
+            
+            .webstore-link {
+                padding: 9px 18px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+            
+            .contact-buttons {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Bambiblossom.id</div>
+            <h1 class="page-title">Syarat & Ketentuan Pre-Order</h1>
+        </div>
+        
+        <div class="card">
+            <!-- Decorative corners -->
+            <div class="corner corner-tl"></div>
+            <div class="corner corner-tr"></div>
+            <div class="corner corner-bl"></div>
+            <div class="corner corner-br"></div>
+            
+            <p class="intro-text">Terima kasih telah melakukan pre-order! Silakan baca ketentuan berikut dengan seksama.</p>
+            
+            <div class="rule">
+                <div class="rule-icon">⏳</div>
+                <div class="rule-content">
+                    <h3>Estimasi Waktu Pengerjaan</h3>
+                    <p>Produk pre-order akan tersedia dalam waktu sekitar 5-7 hari kerja sejak tanggal konfirmasi.</p>
+                </div>
+            </div>
+            
+            <div class="rule">
+                <div class="rule-icon">🌐</div>
+                <div class="rule-content">
+                    <h3>Versi Bahasa</h3>
+                    <p>Untuk permintaan cepat seperti pre-order ini, produk hanya tersedia dalam versi bahasa Inggris resmi dari penerbit yang telah memiliki lisensi.</p>
+                </div>
+            </div>
+            
+            <div class="rule">
+                <div class="rule-icon">💸</div>
+                <div class="rule-content">
+                    <h3>DP Bersifat Hangus</h3>
+                    <p>Harap diperhatikan bahwa DP (uang muka) tidak dapat dikembalikan apabila pembeli membatalkan PO secara sepihak setelah transaksi dilakukan.</p>
+                </div>
+            </div>
+            
+            <div class="rule">
+                <div class="rule-icon">📩</div>
+                <div class="rule-content">
+                    <h3>Notifikasi Produk Siap</h3>
+                    <p>Setelah produkmu siap, kamu akan menerima notifikasi melalui kontak personal yang kamu cantumkan saat pembayaran (email/chat). Produk akan tersedia di etalase toko dengan harga yang sudah dikurangi DP.</p>
+                </div>
+            </div>
+            
+            <div class="rule">
+                <div class="rule-icon">🗝️</div>
+                <div class="rule-content">
+                    <h3>Key Card Akses</h3>
+                    <p>Saat melakukan transaksi PO ini, kamu juga telah menerima file key card berisi kode akses yang diperlukan untuk membuka produk yang telah kamu pesan. Pastikan kamu menyimpan kode tersebut dengan baik, karena akan digunakan nanti ketika produk telah tersedia.</p>
+                </div>
+            </div>
+            
+            <div class="rule">
+                <div class="rule-icon">📞</div>
+                <div class="rule-content">
+                    <h3>Konfirmasi PO</h3>
+                    <p>Silakan hubungi kami melalui kontak layanan pelanggan yang tersemat di bawah untuk mengonfirmasi pembelian PO ini.</p>
+                </div>
+            </div>
+            
+            <div class="rule">
+                <div class="rule-icon">❓</div>
+                <div class="rule-content">
+                    <h3>Pertanyaan?</h3>
+                    <p>Jangan ragu bertanya jika ada hal yang belum jelas. Kami dengan senang hati akan memandumu selama prosesnya.</p>
+                </div>
+            </div>
+            
+            <div class="rule">
+                <div class="rule-icon">📚</div>
+                <div class="rule-content">
+                    <h3>Produk Resmi</h3>
+                    <p>Semua produk digital kami adalah versi resmi dan legal dari penerbit berlisensi bahasa Inggris, bukan bajakan, bukan hasil terjemahan ilegal.</p>
+                </div>
+            </div>
+            
+            <div class="contact-section">
+                <h3 class="contact-title">Hubungi Kami</h3>
+                <div class="contact-buttons">
+                    <a href="mailto:bambiblossom.id@gmail.com" class="contact-button" title="Email">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail" />
+                    </a>
+                    <a href="https://api.whatsapp.com/send?phone=628978372752" class="contact-button" title="WhatsApp" target="_blank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+                    </a>
+                    <a href="https://t.me/bambiblossom_id" class="contact-button" title="Telegram" target="_blank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" />
+                    </a>
+                </div>
+                <a href="https://bambi-blossom.myr.id/" class="webstore-link" target="_blank">Kunjungi Webstore Kami</a>
+            </div>
+            
+            <p class="agreement">✅ Dengan melakukan PO, kamu setuju dengan semua ketentuan di atas.</p>
+        </div>
+    </div>
+
+    <script>
+        // Fixed Sakura Animation Script
+        function createSakura() {
+            const sakura = document.createElement('div');
+            sakura.classList.add('sakura');
+            
+            // Random horizontal position
+            const startX = Math.random() * window.innerWidth;
+            
+            // Random size between 20px and 40px
+            const size = Math.random() * 20 + 20;
+            
+            // Random duration between 8s and 15s
+            const duration = Math.random() * 7 + 8;
+            
+            // Random delay up to 5s
+            const delay = Math.random() * 5;
+            
+            // Random rotation
+            const rotation = Math.random() * 360;
+            
+            // Color variations
+            const colors = ['#FF9EB5', '#FFB7C5', '#FFD1DC', '#FFA8B8'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            sakura.style.cssText = `
+                left: ${startX}px;
+                font-size: ${size}px;
+                animation-duration: ${duration}s;
+                animation-delay: ${delay}s;
+                color: ${randomColor};
+                filter: drop-shadow(0 0 3px rgba(255, 158, 181, 0.4));
+                opacity: 0.9;
+            `;
+            
+            sakura.innerHTML = '🌸';
+            document.body.appendChild(sakura);
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                sakura.remove();
+            }, (duration + delay) * 1000);
+        }
+        
+        function initSakura() {
+            // Create initial flowers
+            for (let i = 0; i < 15; i++) {
+                setTimeout(createSakura, i * 500);
+            }
+            
+            // Continuous creation
+            setInterval(createSakura, 600);
+        }
+        
+        window.addEventListener('load', initSakura);
+    </script>
+</body>
+</html>
